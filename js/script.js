@@ -287,10 +287,76 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Footer social links hover effects
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-4px) scale(1.05)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Footer links smooth scroll
+    const footerLinks = document.querySelectorAll('.footer-link[href^="#"], .footer-link[href*="#"]');
+    footerLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href.includes('#')) {
+                const hash = href.split('#')[1];
+                if (hash) {
+                    const targetSection = document.querySelector(`#${hash}`);
+                    if (targetSection) {
+                        e.preventDefault();
+                        const headerHeight = document.querySelector('.header').offsetHeight;
+                        const targetPosition = targetSection.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            }
+        });
+    });
+
+    // Footer animation on scroll into view
+    const footerObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const footerSections = entry.target.querySelectorAll('.footer-brand, .footer-links-section');
+                footerSections.forEach((section, index) => {
+                    setTimeout(() => {
+                        section.style.opacity = '1';
+                        section.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+                footerObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    const footer = document.querySelector('.footer');
+    if (footer) {
+        footerObserver.observe(footer);
+        
+        // Initially hide footer sections for animation
+        const footerSections = footer.querySelectorAll('.footer-brand, .footer-links-section');
+        footerSections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+    }
+
     console.log('🚀 Shuhary Portfolio loaded successfully!');
+    console.log('📱 Enhanced footer with social links and animations ready!');
 });
 
-// Add CSS for fade-in animation
+// Add CSS for fade-in animation and footer enhancements
 const style = document.createElement('style');
 style.textContent = `
     .fade-in-up {
@@ -310,6 +376,25 @@ style.textContent = `
     
     .loaded .hero-content {
         animation: fadeInUp 1s ease 0.3s both;
+    }
+    
+    /* Footer enhancement animations */
+    .footer-brand, .footer-links-section {
+        will-change: opacity, transform;
+    }
+    
+    .social-link {
+        will-change: transform;
+    }
+    
+    .footer-link:hover::before {
+        animation: pulse 0.3s ease;
+    }
+    
+    @keyframes pulse {
+        0% { transform: translateY(-50%) scale(0); }
+        50% { transform: translateY(-50%) scale(1.2); }
+        100% { transform: translateY(-50%) scale(1); }
     }
 `;
 document.head.appendChild(style);
