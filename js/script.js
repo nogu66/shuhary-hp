@@ -114,13 +114,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe elements for animation
-    const animateElements = document.querySelectorAll('.service-card, .skill-category, .value-item, .contact-method');
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
+    // const animateElements = document.querySelectorAll('.service-card, .skill-category, .value-item, .contact-method');
+    // animateElements.forEach(el => {
+    //     el.style.opacity = '0';
+    //     el.style.transform = 'translateY(30px)';
+    //     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    //     observer.observe(el);
+    // });
 
     // Typing animation for hero title
     function typeWriter(element, text, speed = 100) {
@@ -171,26 +171,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Service cards tilt effect
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-        card.addEventListener('mousemove', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+    // const serviceCards = document.querySelectorAll('.service-card');
+    // serviceCards.forEach(card => {
+    //     card.addEventListener('mousemove', function(e) {
+    //         const rect = this.getBoundingClientRect();
+    //         const x = e.clientX - rect.left;
+    //         const y = e.clientY - rect.top;
             
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+    //         const centerX = rect.width / 2;
+    //         const centerY = rect.height / 2;
             
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
+    //         const rotateX = (y - centerY) / 10;
+    //         const rotateY = (centerX - x) / 10;
             
-            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-        });
+    //         this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+    //     });
         
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-        });
-    });
+    //     card.addEventListener('mouseleave', function() {
+    //         this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+    //     });
+    // });
 
     // Contact methods animation
     const contactMethods = document.querySelectorAll('.contact-method');
